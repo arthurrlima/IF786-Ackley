@@ -27,3 +27,10 @@ def gen_init(qtd):
         chromosome.clear()
     
     return(solution)
+
+def parent_selec(alist):
+	parents = []
+	
+	#como vai ser feita a seleção dos pais?
+
+	return(parents)
