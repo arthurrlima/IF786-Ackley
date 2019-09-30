@@ -13,7 +13,7 @@ def fitnessFunc(self, chromosome):
 	return(-20.0*math.exp(-0.2*math.sqrt(firstSum/n)) - math.exp(secondSum/n) + 20 + math.e)
 
 #lista de listas OK
-def geracao_zero(qtd):
+def gen_init(qtd):
     a = -3000
     b = 3000
     chromosome = []
