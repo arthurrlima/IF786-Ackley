@@ -1,5 +1,6 @@
 import math
 import random
+import statistics
 
 #fitness é a função, menor é melhor
 def fitnessFunc(self, chromosome):
@@ -28,9 +29,50 @@ def gen_init(qtd):
     
     return(solution)
 
-def parent_selec(alist):
-	parents = []
-	
-	#como vai ser feita a seleção dos pais?
+# Vi no slide que a seleção de pais é aleatoria e uniforme
+def selecaoPais(alist):
+    parents = []
+    first = random.randint(0,29)
+    second = random.randint(0,29)
+    parents.append(alist[first])
+    parents.append(alist[second])
 
-	return(parents)
+    return (parents)
+
+def Normal(alist):
+    normalvet = []
+    passo = statistics.stdev(alist)
+    for n in range(len(alist)):
+        normalvet.append((1/passo*math.sqrt(2*math.pi)) * (math.e**(alist[n]/2*(passo**2))))
+        
+    return (normalvet)
+
+
+def mutationpass(alist):
+    passo = []
+    c = 0.9
+    distNormal = Normal(alist)
+    for n in range(len(alist)):
+        passo.append(statistics.stdev(alist[n]))
+    for n in range(len(alist)):
+        if(distNormal> 1/5):
+            passo[n] = passo[n]/c
+        elif(distNormal < 1/5):
+            passo[n] = passo[n]*c
+        else:
+            passo[n] = passo[n]
+
+    return (passo)
+
+
+def mutation(alist):
+    childPos = random.randint(0,29)
+    muted = alist[childPos]
+    mutationpass = mutationpass(alist)
+
+
+
+
+    alist.append(muted)
+
+    return (alist)
