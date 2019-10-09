@@ -64,15 +64,21 @@ def mutationpass(alist):
 
     return (passo)
 
-
+##função da mutação vai ser pra um cromossomo por vez com o mesmo desvio padrão
+## depois atualiza pela regra do sucesso(define exploit ou explore)
 def mutation(alist):
     childPos = random.randint(0,29)
     muted = alist[childPos]
     mutationpass = mutationpass(alist)
 
-
-
-
     alist.append(muted)
 
     return (alist)
+
+
+## seleção de pais distribuição uniforme, u = numero de filhos, y = numero de pais (u, y)
+## 2 pais, recombinação por amostragem, mistura as informações
+
+#substituição geracional, filhos substituem os pais
+
+#função da probabilidade 
