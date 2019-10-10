@@ -39,6 +39,7 @@ def selecaoPais(alist):
 
     return (parents)
 
+
 def Normal(alist):
     normalvet = []
     passo = statistics.stdev(alist)
@@ -68,11 +69,7 @@ def mutationpass(alist):
 def mutation(alist):
     childPos = random.randint(0,29)
     muted = alist[childPos]
-    mutationpass = mutationpass(alist)
-
-
-
-
-    alist.append(muted)
 
     return (alist)
+
+print (mutation(gen_init(30)))
