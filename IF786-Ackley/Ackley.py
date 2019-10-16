@@ -79,7 +79,7 @@ def mutation(alist):
     muted = alist[escolhido]
     passoMutacao = statistics.stdev(alist)
     for n in range(1, len(alist)):
-        muted[n:] = (muted[n:] + N(0, passoMutacao))
+        muted[n] = (muted[n] + N(0, passoMutacao))
     t = math.sqrt(1/len(alist)-1)
     passoMuted = passoMutacao * (math.exp(t * N(0, 1)))
     muted.insert(0, passoMuted)
