@@ -32,8 +32,6 @@ def gen_init(qtd):
         chromosome.insert(0, passoMutacao)
         solution.append(list(chromosome))
         chromosome.clear()
-    #print (solution)
-
 
     return(solution)
 
@@ -77,12 +75,20 @@ def mutationpass(alist):
 def mutation(alist):
     escolhido = random.randint(0, 29)
     muted = alist[escolhido]
-    passoMutacao = statistics.stdev(alist)
-    for n in range(1, len(alist)):
-        muted[n] = (muted[n] + N(0, passoMutacao))
-    t = math.sqrt(1/len(alist)-1)
+    print(muted)
+    t = math.sqrt(1/len(alist))
+    print(t)
+    passoMutacao = statistics.stdev(muted)
+    print(passoMutacao)
     passoMuted = passoMutacao * (math.exp(t * N(0, 1)))
+    print(passoMuted)
     muted.insert(0, passoMuted)
+    for n in range(1, len(alist)):
+        muted[n] = (muted[n] + N(0, passoMuted))
+        if(muted[n] > 30):
+            muted[n] = (muted[n] - N(0, passoMuted))
+        if(muted[n] < -30):
+            muted[n] = (muted[n] - N(0, passoMuted))
     return (muted)
 
 
@@ -95,4 +101,4 @@ def mutation(alist):
 
 
 geracaoI = gen_init(30)
-print (mutation(geracaoI[0]))
+print (mutation(geracaoI))
