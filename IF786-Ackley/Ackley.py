@@ -1,6 +1,10 @@
 import math
 import random
 import statistics
+import numpy as np
+
+N = np.random.normal
+U = np.random.uniform
 
 #fitness é a função, menor é melhor
 def fitnessFunc(self, chromosome):
@@ -24,9 +28,13 @@ def gen_init(qtd):
         for n in range(qtd):
             chromosome.append(random.randrange(a, b)/100)
         
+        passoMutacao = statistics.stdev(chromosome)
+        chromosome.insert(0, passoMutacao)
         solution.append(list(chromosome))
         chromosome.clear()
-    
+    #print (solution)
+
+
     return(solution)
 
 # Vi no slide que a seleção de pais é aleatoria e uniforme
@@ -67,13 +75,15 @@ def mutationpass(alist):
 ##função da mutação vai ser pra um cromossomo por vez com o mesmo desvio padrão
 ## depois atualiza pela regra do sucesso(define exploit ou explore)
 def mutation(alist):
-    childPos = random.randint(0,29)
-    muted = alist[childPos]
-    mutationpass = mutationpass(alist)
-
-    alist.append(muted)
-
-    return (alist)
+    escolhido = random.randint(0, 29)
+    muted = alist[escolhido]
+    passoMutacao = statistics.stdev(alist)
+    for n in range(1, len(alist)):
+        muted[n:] = (muted[n:] + N(0, passoMutacao))
+    t = math.sqrt(1/len(alist)-1)
+    passoMuted = passoMutacao * (math.exp(t * N(0, 1)))
+    muted.insert(0, passoMuted)
+    return (muted)
 
 
 ## seleção de pais distribuição uniforme, u = numero de filhos, y = numero de pais (u, y)
@@ -82,3 +92,7 @@ def mutation(alist):
 #substituição geracional, filhos substituem os pais
 
 #função da probabilidade 
+
+
+geracaoI = gen_init(30)
+print (mutation(geracaoI[0]))
