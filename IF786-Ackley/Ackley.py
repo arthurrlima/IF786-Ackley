@@ -116,7 +116,7 @@ def recombination(alist):
             alist.append(filho)
     return (alist)
         
-        
+
 
 
 ## seleção de pais distribuição uniforme, u = numero de filhos, y = numero de pais (u, y)
