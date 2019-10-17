@@ -103,13 +103,15 @@ def recombination(alist):
         filho.append((pais[0][n] + pais[1][n])/2)
     return (alist)
 
+
+#errado, não vai ser elitista
 def survivor(alist):
     for n in range(len(alist)):
         fitnesspop = fitnessFunc(alist, alist[n])
     
     while(len(alist) > 30):
-        del(alist[fitnesspop.index(min(fitnesspop))])
-        del(fitnesspop[fitnesspop.index(min(fitnesspop))])
+        del(alist[fitnesspop.index(max(fitnesspop))])
+        del(fitnesspop[fitnesspop.index(max(fitnesspop))])
     
     return (alist)
     
@@ -124,5 +126,6 @@ def survivor(alist):
 
 
 geracaoI = gen_init(30)
-#print (mutation(geracaoI))
+print (mutation(geracaoI))
 #print(recombination(geracaoI))
+print(survivor(recombination(geracaoI)))
