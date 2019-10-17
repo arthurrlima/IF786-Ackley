@@ -101,22 +101,18 @@ def recombination(alist):
     #print(pais[1])
     for n in range(1, len(pais[0])):
         filho.append((pais[0][n] + pais[1][n])/2)
-
-    fitnessPai0 = fitnessFunc(pais, pais[0])
-    fitnessPai1 = fitnessFunc(pais, pais[1])
-    fitnessFilho = fitnessFunc(filho, filho)
-    if(fitnessPai0>fitnessFilho):
-        alist.remove(pais[0])
-        alist.append(filho)
-    elif(fitnessPai1>fitnessFilho):
-        alist.remove(pais[1])
-        if(alist.__contains__(filho)):
-            return (alist)
-        else:
-            alist.append(filho)
     return (alist)
-        
 
+def survivor(alist):
+    for n in range(len(alist)):
+        fitnesspop = fitnessFunc(alist, alist[n])
+    
+    while(len(alist) > 30):
+        del(alist[fitnesspop.index(min(fitnesspop))])
+        del(fitnesspop[fitnesspop.index(min(fitnesspop))])
+    
+    return (alist)
+    
 
 
 ## seleção de pais distribuição uniforme, u = numero de filhos, y = numero de pais (u, y)
