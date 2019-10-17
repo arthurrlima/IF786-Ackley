@@ -89,7 +89,34 @@ def mutation(alist):
             muted[n] = (muted[n] - N(0, passoMuted))
         if(muted[n] < -30):
             muted[n] = (muted[n] - N(0, passoMuted))
+
     return (muted)
+
+def recombination(alist):
+    pais = []
+    filho = []
+    pais = selecaoPais(alist)
+    print(len(pais))
+    print(pais[0])
+    print(pais[1])
+    for n in range(1, len(pais[0])):
+        filho.append((pais[0][n] + pais[1][n])/2)
+
+    fitnessPai0 = fitnessFunc(pais, pais[0])
+    fitnessPai1 = fitnessFunc(pais, pais[1])
+    fitnessFilho = fitnessFunc(filho, filho)
+    if(fitnessPai0>fitnessFilho):
+        alist.remove(pais[0])
+        alist.append(filho)
+    elif(fitnessPai1>fitnessFilho):
+        alist.remove(pais[1])
+        if(alist.__contains__(filho)):
+            return (alist)
+        else:
+            alist.append(filho)
+    return (alist)
+        
+        
 
 
 ## seleção de pais distribuição uniforme, u = numero de filhos, y = numero de pais (u, y)
@@ -102,3 +129,4 @@ def mutation(alist):
 
 geracaoI = gen_init(30)
 print (mutation(geracaoI))
+print(recombination(geracaoI))
