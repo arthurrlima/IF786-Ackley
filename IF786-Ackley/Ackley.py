@@ -75,13 +75,13 @@ def mutationpass(alist):
 def mutation(alist):
     escolhido = random.randint(0, 29)
     muted = alist[escolhido]
-    print(muted)
+    #print(muted)
     t = math.sqrt(1/len(alist))
-    print(t)
+    #print(t)
     passoMutacao = statistics.stdev(muted)
-    print(passoMutacao)
+    #print(passoMutacao)
     passoMuted = passoMutacao * (math.exp(t * N(0, 1)))
-    print(passoMuted)
+    #print(passoMuted)
     muted.insert(0, passoMuted)
     for n in range(1, len(alist)):
         muted[n] = (muted[n] + N(0, passoMuted))
@@ -96,9 +96,9 @@ def recombination(alist):
     pais = []
     filho = []
     pais = selecaoPais(alist)
-    print(len(pais))
-    print(pais[0])
-    print(pais[1])
+    #print(len(pais))
+    #print(pais[0])
+    #print(pais[1])
     for n in range(1, len(pais[0])):
         filho.append((pais[0][n] + pais[1][n])/2)
 
@@ -128,5 +128,5 @@ def recombination(alist):
 
 
 geracaoI = gen_init(30)
-print (mutation(geracaoI))
-print(recombination(geracaoI))
+#print (mutation(geracaoI))
+#print(recombination(geracaoI))
