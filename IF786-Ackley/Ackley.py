@@ -7,8 +7,8 @@ N = np.random.normal
 U = np.random.uniform
 
 #fitness é a função, menor é melhor
-def fitnessFunc(self, chromosome):
 
+def fitnessFunc(self, chromosome):
 	firstSum = 0.0
 	secondSum = 0.0
 	for c in chromosome:
