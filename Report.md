@@ -51,5 +51,7 @@ dos 200 filhos entraram, seleção(30, 200) sob conjunto de filhos.
     28* Solução na geração 191 média 0.0084
     29* Solução na geração 190 média 0.0081
     30* Solução na geração 205 média 0.0085
+	
+	.
     
      
