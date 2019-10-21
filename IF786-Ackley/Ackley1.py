@@ -92,8 +92,6 @@ def recomb(parentslist):
 #seleção 30 pais, 200 filhos
 def survivors(population, children):
     
-    
-    
     fitnesspop = []
     fitnesschild = []
 
