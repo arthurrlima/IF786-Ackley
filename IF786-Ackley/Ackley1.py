@@ -2,34 +2,30 @@ import random
 import statistics
 import numpy as np
 import math
+from function import Ackley
 
 U = np.random.uniform
 N = np.random.normal
+f_ackley = Ackley().f_x
 
 def gen_init(qtd):
-    a = -1500
-    b = 1500
-    chromosome = []
+
+    cromossome = []
     solution = []
 
-    for k in range(qtd):
-        for n in range(qtd):
-            chromosome.append(random.randrange(a, b)/100)
-        
-        passoMutacao = statistics.stdev(chromosome)
-        solution.append(list(chromosome))
-        chromosome.clear()
+    for n in range(qtd):
+        cromossome.clear()
+        for k in range(30):
+            cromossome.append(U(-15, 15))
 
-    return solution, passoMutacao
+        solution.append(list(cromossome))
+    
+    return solution
 
-def fitnessFunc(self, chromosome):
-	firstSum = 0.0
-	secondSum = 0.0
-	for c in chromosome:
-		firstSum += c**2.0
-		secondSum += math.cos(2.0*math.pi*c)
-	n = float(len(chromosome))
-	return(-20.0*math.exp(-0.2*math.sqrt(firstSum/n)) - math.exp(secondSum/n) + 20 + math.e)
+def fitnessFunc(cromossome):
+        return abs(f_ackley(cromossome))
+
+
 
 def uniform(chromosomes):
     prob = 1/5
@@ -51,17 +47,18 @@ def gaussian(chromosomes):
     upper = 15.0
     lower = -15.0
     sigma = statistics.stdev(chromosomes)
-    to_mutate = U(0, 1, chromosomes.shape) < prob
+    to_mutate = U(0, 1, len(chromosomes)) < prob
     tau = 1 / np.sqrt(len(chromosomes))
 
     for i in range(len(chromosomes)):
-        for j in range(len(chromosomes[i])):
-            if to_mutate[i, j]:
+            if to_mutate[i]:
                 sigma = sigma * np.exp(tau * N(0,1))
-                chromosomes[i, j] = chromosomes[i, j] + sigma * N(0,1)
-
-    chromosomes = np.maximum.reduce([chromosomes, lower])
-    chromosomes = np.minimum.reduce([chromosomes, upper])
+                chromosomes[i] = chromosomes[i] + sigma * N(0,1)
+                if chromosomes[i] > 15:
+                    chromosomes[i] = 15
+                elif chromosomes[i] < -15:
+                    chromosomes[i] = -15
+                
 
     return chromosomes, sigma
 
@@ -99,7 +96,7 @@ def survivors(population, children):
         fitnesspop.append(fitnessFunc(chromosomes))
     
     for chromosomes in children:
-        fitnesspop.append(fitnessFunc(chromosomes))
+        fitnesschild.append(fitnessFunc(chromosomes))
 
     #tira os piores 30 pais
     for n in range(30):
@@ -114,4 +111,66 @@ def survivors(population, children):
         del(fitnesschild[fitnesschild.index(min(fitnesschild))])
 
     return population
+
+
+#começo da execução
+
+population = gen_init(200)
+tries = 0
+
+while True:
+    tries += 1
+    lista_fitness = []
+
+    for c in population:
+        lista_fitness.append(fitnessFunc(c))
+   
+    
+    fitnessmax = max(lista_fitness)
+    fitnessmin = min(lista_fitness)
+    
+
+    index_ftns = lista_fitness.index(fitnessmin)
+    bool_fit = math.isclose(round(fitnessmin*100)/100, 0)
+
+    if(bool_fit):
+        print("encontrada solução: ", population[index_ftns])
+        print("tentativa n*: ", tries)
+        print("Media = ", statistics.mean(lista_fitness))
+        break
+        
+    
+    if(tries == 30000):
+        print("limite de tentativas estourado, população não convergiu")
+        print("Media = ", statistics.mean(lista_fitness))
+        print("Desvio Padrão = ", statistics.stdev(lista_fitness))
+        break
+
+    if(math.isclose(round(statistics.mean(lista_fitness)*100)/100, 0)):
+        print("População Convergiu, fitness min = ", fitnessmin)
+        print("Media = ", statistics.mean(lista_fitness))
+        print("Desvio Padrão = ", statistics.stdev(lista_fitness))
+        break
+    
+    prole =[]
+
+    while len(prole) < 200:
+        selecao_pais = parent_selec(population)
+        prole.append(recomb(selecao_pais))
+
+    population_temp = []
+    
+    for cromo in population:
+        mutade, sigma = gaussian(cromo)
+        population_temp.append(mutade)
+
+    
+    for counter in range(200):
+        if fitnessFunc(population_temp[counter]) < fitnessFunc(population[counter]):
+            population[counter] = population_temp[counter]
+    
+
+    population = survivors(population, prole)
+    
+    
 
