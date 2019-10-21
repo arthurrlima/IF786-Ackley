@@ -46,7 +46,7 @@ def uniform(chromosomes):
                 chromosomes[i, j] = aux
     return chromosomes
 
-def guassian(chromosomes):
+def gaussian(chromosomes):
     prob = 1/5
     upper = 30.0
     lower = -30.0
@@ -64,4 +64,16 @@ def guassian(chromosomes):
     chromosomes = np.minimum.reduce([chromosomes, upper])
 
     return chromosomes, sigma
+
+def parent_selec(solution):
+   select = np.random.randint(0, 30, 2)
+
+   parents = []
+
+   parents.append(solution[select[0]])
+   parents.append(solution[select[1]])
+
+   return parents
+
+
 
