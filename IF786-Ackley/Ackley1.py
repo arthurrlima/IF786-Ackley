@@ -91,8 +91,8 @@ def recomb(parentslist):
 
 #seleção 30 pais, 200 filhos
 def survivors(population, children):
-    #tira os piores 30 pais
-    #adiciona os 30 melhores filhos
+    
+    
     
     fitnesspop = []
     fitnesschild = []
@@ -103,10 +103,12 @@ def survivors(population, children):
     for chromosomes in children:
         fitnesspop.append(fitnessFunc(chromosomes))
 
+    #tira os piores 30 pais
     for n in range(30):
         del(population[fitnesspop.index(max(fitnesspop))])
         del(fitnesspop[fitnesspop.index(max(fitnesspop))])
 
+    #adiciona os 30 melhores filhos
     for k in range(30):
         population.append(children[fitnesschild.index(min(fitnesschild))])
 
