@@ -7,8 +7,8 @@ U = np.random.uniform
 N = np.random.normal
 
 def gen_init(qtd):
-    a = -3000
-    b = 3000
+    a = -1500
+    b = 1500
     chromosome = []
     solution = []
 
@@ -33,8 +33,8 @@ def fitnessFunc(self, chromosome):
 
 def uniform(chromosomes):
     prob = 1/5
-    upper = 30.0
-    lower = -30.0
+    upper = 15.0
+    lower = -15.0
     to_mutate = U(0, 1, chromosomes.shape) < prob
     
     for i in range(len(chromosomes)):
@@ -48,8 +48,8 @@ def uniform(chromosomes):
 
 def gaussian(chromosomes):
     prob = 1/5
-    upper = 30.0
-    lower = -30.0
+    upper = 15.0
+    lower = -15.0
     sigma = statistics.stdev(chromosomes)
     to_mutate = U(0, 1, chromosomes.shape) < prob
     tau = 1 / np.sqrt(len(chromosomes))
@@ -66,7 +66,7 @@ def gaussian(chromosomes):
     return chromosomes, sigma
 
 def parent_selec(solution):
-   select = np.random.randint(0, 30, 2)
+   select = np.random.randint(0, 200, 2)
 
    parents = []
 
@@ -76,4 +76,26 @@ def parent_selec(solution):
    return parents
 
 
+#intermediario local
+def recomb(parentslist):
+
+    parent1 = parentslist[0]
+    parent2 = parentslist[1]
+    filho = []
+
+    for n in range(30):
+        filho.append((parent1[n] + parent2[n])/2)
+    
+    return filho
+
+
+#seleção 30 pais, 200 filhos
+def survivors():
+    survs = []
+    #organizar e tirar os piores 30 pais
+    #organizar e adicionar os 30 melhores filhos
+
+    
+    
+    return survs
 
