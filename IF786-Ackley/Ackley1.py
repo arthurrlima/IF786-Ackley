@@ -3,13 +3,14 @@ import statistics
 import numpy as np
 import math
 from function import Ackley
+import matplotlib.pyplot as plt
 
 U = np.random.uniform
 N = np.random.normal
 f_ackley = Ackley().f_x
 
 def gen_init(qtd):
-
+    #iniciando a população, distribuição uniforme entre low e high
     cromossome = []
     solution = []
 
@@ -28,6 +29,7 @@ def fitnessFunc(cromossome):
 
 
 def uniform(chromosomes):
+    #mutação por uniforme
     prob = 1/5
     upper = 15.0
     lower = -15.0
@@ -43,6 +45,7 @@ def uniform(chromosomes):
     return chromosomes
 
 def gaussian(chromosomes):
+    #mutação por gaussiana
     prob = 1/5
     upper = 15.0
     lower = -15.0
@@ -63,6 +66,7 @@ def gaussian(chromosomes):
     return chromosomes, sigma
 
 def parent_selec(solution):
+    #seleção dos pais por distribuição
    select = np.random.randint(0, 200, 2)
 
    parents = []
@@ -73,9 +77,9 @@ def parent_selec(solution):
    return parents
 
 
-#intermediario local
-def recomb(parentslist):
 
+def recomb(parentslist):
+    #recombinação por média intermediario local fi = (p1i + p2i)/2
     parent1 = parentslist[0]
     parent2 = parentslist[1]
     filho = []
@@ -86,9 +90,9 @@ def recomb(parentslist):
     return filho
 
 
-#seleção 30 pais, 200 filhos
+
 def survivors(population, children):
-    
+    #seleção 30 pais, 200 filhos
     fitnesspop = []
     fitnesschild = []
 
@@ -118,17 +122,28 @@ def survivors(population, children):
 population = gen_init(200)
 tries = 0
 
+x = []
+y = []
+z = []
+
+plt.xlabel('x - Geração')
+plt.ylabel('y - Fitness')
+plt.title('Ackley Otimization')
+
 while True:
     tries += 1
     lista_fitness = []
-
+    lista_fitness.clear()
+    x.append(tries)
+    
     for c in population:
         lista_fitness.append(fitnessFunc(c))
    
-    
     fitnessmax = max(lista_fitness)
     fitnessmin = min(lista_fitness)
     
+    y.append(fitnessmin)
+    z.append(statistics.mean(lista_fitness))
 
     index_ftns = lista_fitness.index(fitnessmin)
     bool_fit = math.isclose(round(fitnessmin*100)/100, 0)
@@ -137,9 +152,13 @@ while True:
         print("encontrada solução: ", population[index_ftns])
         print("tentativa n*: ", tries)
         print("Media = ", statistics.mean(lista_fitness))
+        plt.plot(x, y, label='minimo')
+        plt.plot(x, z, label='médio')
+        
+        plt.legend()
+        plt.show()
         break
         
-    
     if(tries == 30000):
         print("limite de tentativas estourado, população não convergiu")
         print("Media = ", statistics.mean(lista_fitness))
@@ -171,6 +190,3 @@ while True:
     
 
     population = survivors(population, prole)
-    
-    
-
