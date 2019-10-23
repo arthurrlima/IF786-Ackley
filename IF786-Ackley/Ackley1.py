@@ -125,6 +125,7 @@ tries = 0
 x = []
 y = []
 z = []
+w = []
 
 plt.xlabel('x - Geração')
 plt.ylabel('y - Fitness')
@@ -143,6 +144,7 @@ while True:
     fitnessmin = min(lista_fitness)
     
     y.append(fitnessmin)
+    w.append(fitnessmax)
     z.append(statistics.mean(lista_fitness))
 
     index_ftns = lista_fitness.index(fitnessmin)
@@ -155,6 +157,7 @@ while True:
         print("Minimo: ", fitnessmin )
         plt.plot(x, y, label='minimo')
         plt.plot(x, z, label='médio')
+        plt.plot(x, w, label='pior')
         
         plt.legend()
         plt.show()
