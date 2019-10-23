@@ -152,6 +152,7 @@ while True:
         print("encontrada solução: ", population[index_ftns])
         print("tentativa n*: ", tries)
         print("Media = ", statistics.mean(lista_fitness))
+        print("Minimo: ", fitnessmin )
         plt.plot(x, y, label='minimo')
         plt.plot(x, z, label='médio')
         
